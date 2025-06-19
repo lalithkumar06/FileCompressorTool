@@ -38,10 +38,13 @@ function CompressionPanel({
         });
       }, 200);
 
-      const response = await fetch('http://localhost:3001/api/compress', {
-        method: 'POST',
-        body: formData
-      });
+      const response = await fetch(
+        "https://filecompressortool.onrender.com/api/compress",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       clearInterval(progressInterval);
       setProgress(100);
@@ -92,10 +95,13 @@ function CompressionPanel({
         });
       }, 200);
 
-      const response = await fetch('http://localhost:3001/api/decompress', {
-        method: 'POST',
-        body: formData
-      });
+      const response = await fetch(
+        "https://filecompressortool.onrender.com/api/decompress",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       clearInterval(progressInterval);
       setProgress(100);
@@ -122,7 +128,9 @@ function CompressionPanel({
     if (!downloadLink) return;
 
     try {
-      const response = await fetch(`http://localhost:3001/api/download/${downloadLink.filename}`);
+      const response = await fetch(
+        `https://filecompressortool.onrender.com/api/download/${downloadLink.filename}`
+      );
       
       if (!response.ok) {
         throw new Error('Download failed');
