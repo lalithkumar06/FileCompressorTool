@@ -15,7 +15,7 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 
-const uploadsDir = path.join(__dirname, 'uploads');
+const uploadsDir = '/tmp';
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true });
 }
@@ -39,6 +39,7 @@ const upload = multer({
 const huffmanCompressor = new HuffmanCompressor();
 
 app.post('/api/compress', upload.single('file'), async (req, res) => {
+    console.log("request received for compression");
     try {
         if (!req.file) {
             return res.status(400).json({ error: 'No file uploaded' });
@@ -151,5 +152,5 @@ app.get('/api/download/:filename', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
