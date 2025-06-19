@@ -78,12 +78,10 @@ export class HuffmanCompressor {
     buildHuffmanTree(freq) {
         const heap = new MinHeap();
         
-        // Create leaf nodes for each character
         for (const [char, frequency] of Object.entries(freq)) {
             heap.insert(new HuffmanNode(parseInt(char), frequency));
         }
         
-        // Build the tree
         while (heap.size() > 1) {
             const left = heap.extractMin();
             const right = heap.extractMin();
@@ -101,7 +99,7 @@ export class HuffmanCompressor {
         
         const traverse = (node, code) => {
             if (node.char !== null) {
-                codes[node.char] = code || '0'; // Handle single character case
+                codes[node.char] = code || '0'; 
                 return;
             }
             
@@ -118,17 +116,14 @@ export class HuffmanCompressor {
             return { compressed: new Uint8Array(0), info: { originalSize: 0, compressedSize: 0, compressionRatio: '0.00' } };
         }
         
-        // Build frequency table
         const freq = this.buildFrequencyTable(data);
         
-        // Handle single character case
         if (Object.keys(freq).length === 1) {
             const char = Object.keys(freq)[0];
             const count = freq[char];
             const header = this.serializeTree({ char: parseInt(char), freq: count, left: null, right: null });
             const compressed = new Uint8Array(header.length + 4);
             compressed.set(header);
-            // Store count as 4 bytes
             const countBytes = new ArrayBuffer(4);
             new DataView(countBytes).setUint32(0, count, true);
             compressed.set(new Uint8Array(countBytes), header.length);
@@ -143,19 +138,15 @@ export class HuffmanCompressor {
             };
         }
         
-        // Build Huffman tree
         const root = this.buildHuffmanTree(freq);
         
-        // Build codes
         const codes = this.buildCodes(root);
         
-        // Encode data
         let encodedBits = '';
         for (let i = 0; i < data.length; i++) {
             encodedBits += codes[data[i]];
         }
         
-        // Convert bits to bytes
         const paddingBits = 8 - (encodedBits.length % 8);
         if (paddingBits !== 8) {
             encodedBits += '0'.repeat(paddingBits);
@@ -167,7 +158,6 @@ export class HuffmanCompressor {
             encodedBytes[i / 8] = parseInt(byte, 2);
         }
         
-        // Serialize tree and create final compressed data
         const treeData = this.serializeTree(root);
         const compressed = new Uint8Array(treeData.length + encodedBytes.length + 1);
         compressed.set(treeData);
@@ -189,10 +179,8 @@ export class HuffmanCompressor {
             return new Uint8Array(0);
         }
         
-        // Deserialize tree
         const { tree, offset } = this.deserializeTree(compressedData, 0);
         
-        // Handle single character case
         if (tree.char !== null) {
             const countBytes = compressedData.slice(offset, offset + 4);
             const count = new DataView(countBytes.buffer.slice(countBytes.byteOffset, countBytes.byteOffset + 4)).getUint32(0, true);
@@ -202,18 +190,15 @@ export class HuffmanCompressor {
         const paddingBits = compressedData[compressedData.length - 1];
         const encodedBytes = compressedData.slice(offset, -1);
         
-        // Convert bytes to bits
         let encodedBits = '';
         for (let i = 0; i < encodedBytes.length; i++) {
             encodedBits += encodedBytes[i].toString(2).padStart(8, '0');
         }
         
-        // Remove padding
         if (paddingBits > 0) {
             encodedBits = encodedBits.slice(0, -paddingBits);
         }
         
-        // Decode using tree
         const decoded = [];
         let currentNode = tree;
         
@@ -235,10 +220,10 @@ export class HuffmanCompressor {
         
         const serialize = (n) => {
             if (n.char !== null) {
-                result.push(1); // Leaf node marker
+                result.push(1); 
                 result.push(n.char);
             } else {
-                result.push(0); // Internal node marker
+                result.push(0); 
                 serialize(n.left);
                 serialize(n.right);
             }
@@ -251,13 +236,11 @@ export class HuffmanCompressor {
     deserializeTree(data, offset) {
         const deserialize = (pos) => {
             if (data[pos[0]] === 1) {
-                // Leaf node
                 pos[0]++;
                 const char = data[pos[0]];
                 pos[0]++;
                 return { char, freq: 0, left: null, right: null };
             } else {
-                // Internal node
                 pos[0]++;
                 const left = deserialize(pos);
                 const right = deserialize(pos);

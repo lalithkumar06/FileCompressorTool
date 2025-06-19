@@ -26,7 +26,6 @@ function FileUpload({ onFileSelect, selectedFile }) {
   };
 
   const handleFileSelection = (file) => {
-    // Accept PDF files and compressed files (.bin)
     const validTypes = ['application/pdf', 'application/octet-stream'];
     const validExtensions = ['.pdf', '.bin'];
     

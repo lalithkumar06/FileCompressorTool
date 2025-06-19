@@ -12,17 +12,14 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 3001;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Create uploads directory if it doesn't exist
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// Configure multer for file uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, uploadsDir);
@@ -35,15 +32,12 @@ const storage = multer.diskStorage({
 const upload = multer({ 
     storage: storage,
     limits: {
-        fileSize: 50 * 1024 * 1024 // 50MB limit
+        fileSize: 50 * 1024 * 1024 
     }
 });
 
-// Initialize compressors
 const huffmanCompressor = new HuffmanCompressor();
-const lz77Compressor = new LZ77Compressor();
 
-// Compression endpoint
 app.post('/api/compress', upload.single('file'), async (req, res) => {
     try {
         if (!req.file) {
@@ -63,32 +57,15 @@ app.post('/api/compress', upload.single('file'), async (req, res) => {
             const result = huffmanCompressor.compress(fileData);
             compressedData = result.compressed;
             compressionInfo = result.info;
-        } else if (algorithm === 'lz77') {
-            const result = lz77Compressor.compress(fileData);
-            compressedData = result.compressed;
-            compressionInfo = result.info;
-        } else {
-            // Combined compression: LZ77 first, then Huffman
-            const lz77Result = lz77Compressor.compress(fileData);
-            const huffmanResult = huffmanCompressor.compress(lz77Result.compressed);
-            compressedData = huffmanResult.compressed;
-            compressionInfo = {
-                originalSize: fileData.length,
-                compressedSize: compressedData.length,
-                compressionRatio: ((fileData.length - compressedData.length) / fileData.length * 100).toFixed(2),
-                algorithm: 'LZ77 + Huffman'
-            };
-        }
+        } 
         
         const compressionTime = Date.now() - startTime;
         
-        // Save compressed file
         const compressedFilename = `compressed-${Date.now()}.bin`;
         const compressedPath = path.join(uploadsDir, compressedFilename);
         
         fs.writeFileSync(compressedPath, compressedData);
         
-        // Clean up original file
         fs.unlinkSync(inputPath);
         
         res.json({
@@ -107,7 +84,6 @@ app.post('/api/compress', upload.single('file'), async (req, res) => {
     }
 });
 
-// Decompression endpoint
 app.post('/api/decompress', upload.single('file'), async (req, res) => {
     try {
         if (!req.file) {
@@ -123,23 +99,15 @@ app.post('/api/decompress', upload.single('file'), async (req, res) => {
         
         if (algorithm === 'huffman') {
             decompressedData = huffmanCompressor.decompress(compressedData);
-        } else if (algorithm === 'lz77') {
-            decompressedData = lz77Compressor.decompress(compressedData);
-        } else {
-            // Combined decompression: Huffman first, then LZ77
-            const huffmanDecompressed = huffmanCompressor.decompress(compressedData);
-            decompressedData = lz77Compressor.decompress(huffmanDecompressed);
         }
         
         const decompressionTime = Date.now() - startTime;
         
-        // Save decompressed file
         const decompressedFilename = `decompressed-${originalFilename || 'file.pdf'}`;
         const decompressedPath = path.join(uploadsDir, decompressedFilename);
         
         fs.writeFileSync(decompressedPath, decompressedData);
         
-        // Clean up compressed file
         fs.unlinkSync(inputPath);
         
         res.json({
@@ -155,7 +123,6 @@ app.post('/api/decompress', upload.single('file'), async (req, res) => {
     }
 });
 
-// Download endpoint
 app.get('/api/download/:filename', (req, res) => {
     try {
         const filename = req.params.filename;
@@ -169,7 +136,6 @@ app.get('/api/download/:filename', (req, res) => {
             if (err) {
                 console.error('Download error:', err);
             } else {
-                // Clean up file after download
                 setTimeout(() => {
                     if (fs.existsSync(filePath)) {
                         fs.unlinkSync(filePath);
