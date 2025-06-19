@@ -1,0 +1,146 @@
+.file-upload-container {
+  width: 100%;
+}
+
+.file-upload-area {
+  border: 2px dashed #e5e7eb;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-upload-area:hover {
+  border-color: #2563eb;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.1);
+}
+
+.file-upload-area.dragging {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  transform: scale(1.02);
+}
+
+.file-upload-area.has-file {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.upload-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.upload-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.upload-prompt h3 {
+  margin: 0;
+  color: #374151;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.upload-prompt p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.supported-formats {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  background: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+}
+
+.selected-file {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.file-icon {
+  font-size: 2.5rem;
+}
+
+.file-info {
+  text-align: left;
+  flex: 1;
+}
+
+.file-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #111827;
+  font-size: 1.125rem;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.file-info p {
+  margin: 0 0 0.25rem 0;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.file-type {
+  background: #e0f2fe;
+  color: #0891b2;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.change-file-btn {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.change-file-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+@media (max-width: 768px) {
+  .file-upload-area {
+    padding: 1.5rem;
+    min-height: 150px;
+  }
+  
+  .selected-file {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .file-info {
+    text-align: center;
+  }
+}
