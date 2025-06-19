@@ -42,6 +42,9 @@ const huffmanCompressor = new HuffmanCompressor();
 
 app.post('/api/compress', upload.single('file'), async (req, res) => {
     console.log("request received for compression");
+    console.log("BODY:", req.body);
+    console.log("FILE:", req.file);
+
     try {
         if (!req.file) {
             return res.status(400).json({ error: 'No file uploaded' });

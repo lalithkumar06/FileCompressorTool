@@ -25,7 +25,7 @@ function CompressionPanel({
     try {
       const formData = new FormData();
       formData.append('file', selectedFile);
-      formData.append('algorithm', algorithm);
+      formData.append('algorithm', "huffman");
 
       // Simulate progress
       const progressInterval = setInterval(() => {
