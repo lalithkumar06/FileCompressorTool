@@ -1,8 +1,53 @@
-# React + Vite
+# 📦 File Compressor Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A powerful file compression tool built using **React** for the frontend and **Node.js** for the backend. It implements the **Huffman Coding algorithm** to efficiently compress and decompress files directly in the browser.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
+
+- ⚡ Compress files using Huffman coding
+- 🔓 Decompress previously compressed files
+- 🖥️ Intuitive React-based user interface
+- 🔗 Secure file handling using Node.js backend
+- 📁 Support for various file types (e.g., `.pdf`, `.bin`)
+
+---
+
+## 🛠️ Tech Stack
+
+| Frontend | Backend | Compression |
+|----------|---------|-------------|
+| React    | Node.js | Huffman Coding (custom implementation) |
+
+---
+
+
+
+## 🧠 How Huffman Coding Works
+
+Huffman coding is a greedy algorithm used for lossless data compression. It builds a binary tree where the most frequent characters are placed closer to the root, resulting in shorter codes and smaller file sizes.
+
+---
+
+## ⚙️ Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/file-compressor.git
+cd project
+
+---
+
+### 2.Install Dependencies
+npm install
+
+### 3.Run the App
+
+##Start the Backend
+cd ./server
+npm run server
+
+##start the Frontend
+npm run dev
