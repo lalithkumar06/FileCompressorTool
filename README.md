@@ -1,6 +1,6 @@
 # 📦 File Compressor Tool
 
-A powerful file compression tool built using **React** for the frontend and **Node.js** for the backend. It implements the **Huffman Coding algorithm** to efficiently compress and decompress files directly in the browser.
+A powerful file compression tool built using **React** . It implements the **Huffman Coding algorithm** to efficiently compress and decompress files directly in the browser.
 
 ---
 
@@ -45,9 +45,7 @@ npm install
 
 ### 3.Run the App
 
-##Start the Backend
-cd ./server
-npm run server
+
 
 ##start the Frontend
 npm run dev

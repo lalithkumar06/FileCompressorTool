@@ -1,22 +1,18 @@
 {
-  "name": "file-compressor-app",
+  "name": "file-compressor-frontend",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"vite\"",
+    "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "server": "node --max-old-space-size=1024 server/index.js"
+    "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.6.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "express": "^4.18.2",
-    "multer": "^1.4.5-lts.1",
-    "cors": "^2.8.5",
-    "concurrently": "^8.2.2"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
@@ -28,6 +24,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.11",
     "globals": "^15.9.0",
+    "terser": "^5.43.1",
     "vite": "^5.4.2"
   }
 }
