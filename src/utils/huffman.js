@@ -1,4 +1,3 @@
-// Advanced Huffman Coding Implementation with further optimizations
 class HuffmanNode {
   constructor(char, freq, left = null, right = null) {
     this.char = char;
@@ -161,6 +160,8 @@ export class HuffmanCoder {
     }
     return decoded;
   }
+
+  
 
   serializeTree(node) {
     if (!node) return null;
